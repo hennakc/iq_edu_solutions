@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initServiceCardStack();
   initFaqAccordion();
   initScrollReveal();
+  initStatCounter();        // Animated 15+ years counter on scroll
   initContactForm();        // Form submission generates automated WhatsApp pre-filled text
 });
 
@@ -181,22 +182,20 @@ function initServiceCardStack() {
   gsap.set(cards[2], { x: 24, y: 24, scale: 0.88, opacity: 0.90, zIndex: 80  });
 
   /*
-   * Timeline layout — 4 units per card swap:
-   *   [base+0   … base+1.5] → HOLD  (front card fully readable, no motion)
-   *   [base+1.5 … base+2.7] → LIFT  (card A arcs up and left)
-   *   [base+2.7 … base+3.5] → LAND  (card A drops behind stack)
-   *   [base+1.5 … base+3.5] → B/C/D slide forward simultaneously
+   * Timeline layout — 5 units per card swap (more reading time per card):
+   *   [base+0   … base+2.0] → HOLD  (front card fully readable, no motion)
+   *   [base+2.0 … base+3.2] → LIFT  (card A arcs up and left)
+   *   [base+3.2 … base+4.2] → LAND  (card A drops behind stack)
+   *   [base+2.0 … base+4.2] → B/C/D slide forward simultaneously
    *
-   * 7 cards = 6 swaps × 4 units + 1.5 final hold = 25.5 total units
-   * The sticky container height = SCROLL_PER_UNIT × totalUnits
-   * SCROLL_PER_UNIT is set in CSS as --scroll-unit (150px)
+   * 7 cards = 6 swaps × 5 units + 3 final hold = 33 total units
    */
-  const SWAP        = 4;    // timeline units per card swap
-  const CARD_UNITS  = (totalCards - 1) * SWAP + 1.5; // 25.5 (6 swaps + final hold)
-  const SLIDE_UNITS = window.innerWidth < 1024 ? 8.0 : 0; // mobile panel slide (1.5) + extended reading hold (6.5)
-  const TOTAL_UNITS = CARD_UNITS + SLIDE_UNITS;       // 33.5 on mobile, 25.5 on desktop
+  const SWAP        = 5;    // timeline units per card swap (increased for better readability)
+  const CARD_UNITS  = (totalCards - 1) * SWAP + 3; // 33 (6 swaps + extended final hold)
+  const SLIDE_UNITS = window.innerWidth < 1024 ? 8.0 : 0;
+  const TOTAL_UNITS = CARD_UNITS + SLIDE_UNITS;
   const PX_PER_UNIT = 150;
-  const totalPx     = TOTAL_UNITS * PX_PER_UNIT;      // 5025px mobile, 3825px desktop
+  const totalPx     = TOTAL_UNITS * PX_PER_UNIT;
 
   // Set container height exactly — no blank leftover, no cut-off slide
   container.style.height = totalPx + 'px';
@@ -211,6 +210,18 @@ function initServiceCardStack() {
     }
   });
 
+  /* Scroll hint indicator stays persistent until user actively begins first scroll */
+  const scrollIndicator = document.getElementById('cards-scroll-indicator');
+  if (scrollIndicator) {
+    tl.to(scrollIndicator, { opacity: 1, duration: 2.0 }, 0);
+    tl.to(scrollIndicator, {
+      opacity: 0,
+      y: 15,
+      duration: 0.8,
+      ease: 'power1.out'
+    }, 2.0);
+  }
+
   for (let i = 0; i < totalCards - 1; i++) {
     const base  = i * SWAP;
     const cardA = cards[i];       // exits — lifts and lands behind
@@ -219,62 +230,62 @@ function initServiceCardStack() {
     const cardD = cards[i + 3];  // moves to shingle pos 2
 
     /* HOLD — keep front card fully still so it is readable */
-    tl.to(cardA, { opacity: 1, duration: 1.5, ease: 'none' }, base);
+    tl.to(cardA, { opacity: 1, duration: 2.0, ease: 'none' }, base);
 
     /* CARD A — Phase 1: Lift and arc left */
     tl.to(cardA, {
       y: -250, x: -65,
       scale: 1.04, rotation: -10, opacity: 0.85,
       duration: 1.2, ease: 'power2.out'
-    }, base + 1.5);
+    }, base + 2.0);
 
     /* CARD A — Phase 2: Drop behind the stack */
     tl.to(cardA, {
       y: 40, x: 40,
       scale: 0.82, rotation: 0, opacity: 0,
-      duration: 0.8, ease: 'power2.in',
+      duration: 1.0, ease: 'power2.in',
       onStart:           () => gsap.set(cardA, { zIndex: 10  }),
       onReverseComplete: () => gsap.set(cardA, { zIndex: 100 })
-    }, base + 2.7);
+    }, base + 3.2);
 
     /* CARD B — Slide to front */
     tl.to(cardB, {
       x: 0, y: 0, scale: 1, opacity: 1,
-      duration: 2.0, ease: 'power2.inOut',
+      duration: 2.2, ease: 'power2.inOut',
       onStart:           () => gsap.set(cardB, { zIndex: 100 }),
       onReverseComplete: () => gsap.set(cardB, { zIndex: 90  })
-    }, base + 1.5);
+    }, base + 2.0);
 
     /* CARD C — Move to shingle pos 1 */
     if (cardC) {
       tl.to(cardC, {
         x: 12, y: 12, scale: 0.94, opacity: 0.97,
-        duration: 2.0, ease: 'power2.inOut',
+        duration: 2.2, ease: 'power2.inOut',
         onStart:           () => gsap.set(cardC, { zIndex: 90 }),
         onReverseComplete: () => gsap.set(cardC, { zIndex: 80 })
-      }, base + 1.5);
+      }, base + 2.0);
     }
 
     /* CARD D — Fade into shingle pos 2 */
     if (cardD) {
       tl.to(cardD, {
         x: 24, y: 24, scale: 0.88, opacity: 0.90,
-        duration: 2.0, ease: 'power2.inOut',
+        duration: 2.2, ease: 'power2.inOut',
         onStart:           () => gsap.set(cardD, { zIndex: 80 }),
         onReverseComplete: () => gsap.set(cardD, { zIndex: 10 })
-      }, base + 1.5);
+      }, base + 2.0);
     }
   }
 
-  /* ── Final hold: card 7 stays fully visible at the front ── */
+  /* ── Final hold: card 7 stays fully visible at the front for 3 units ── */
   const lastBase = (totalCards - 1) * SWAP;
-  tl.to(cards[totalCards - 1], { opacity: 1, duration: 1.5, ease: 'none' }, lastBase);
+  tl.to(cards[totalCards - 1], { opacity: 1, duration: 3.0, ease: 'none' }, lastBase);
 
   /* ── Mobile only: after ALL 7 cards finish, slide the entire track up
      yPercent:-50 moves the 200%-tall track up by one full viewport screen,
      perfectly revealing the blue text panel beneath the card panel ── */
   if (window.innerWidth < 1024) {
-    const slideAt = lastBase + 1.5;
+    const slideAt = lastBase + 3.0;
     tl.to('.services-panels-track', {
       yPercent: -50,          // 50% of 200% height = one full viewport screen
       duration: 1.5,
@@ -336,6 +347,46 @@ function initScrollReveal() {
   revealElements.forEach(element => {
     revealObserver.observe(element);
   });
+}
+
+/**
+ * Animated stat counter — numerates from 0 to target value when scrolled into view
+ */
+function initStatCounter() {
+  const counter = document.getElementById('years-counter');
+  if (!counter) return;
+
+  const target = parseInt(counter.getAttribute('data-target'), 10);
+  let hasAnimated = false;
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasAnimated) {
+        hasAnimated = true;
+        animateCounter(counter, 0, target, 1200);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counterObserver.observe(counter);
+}
+
+function animateCounter(el, start, end, duration) {
+  const totalSteps = end - start;
+  const stepDelay = duration / totalSteps; // time per tick
+  let current = start;
+
+  function tick() {
+    current++;
+    el.textContent = current;
+
+    if (current < end) {
+      setTimeout(tick, stepDelay);
+    }
+  }
+
+  tick();
 }
 
 /**

@@ -11,7 +11,8 @@
   --color-primary:      #1C1C1E;   /* iOS label */
   --color-secondary:    #0055A5;   /* 25% Lighter Blue */
   --color-accent:       #007AFF;   /* Accent Blue */
-  --color-orange:       #FF9F0A;   /* iOS systemOrange */
+  --color-dark-blue:    #002B66;   /* Rich Dark Navy Blue */
+  --color-orange:       var(--color-dark-blue); /* Replaced orange text color with dark blue */
   --color-text-main:    #1C1C1E;   /* iOS label */
   --color-text-muted:   #6C6C70;   /* iOS secondaryLabel */
   --color-text-tertiary:#AEAEB2;   /* iOS tertiaryLabel */
@@ -567,18 +568,20 @@ header.scrolled {
   justify-content: center; /* Exactly center cards horizontally & vertically */
 }
 
-/* Square Card Dimensions inside stack. The deck is offset slightly left/down
-   so the cards, which fan out to the upper right, stay optically centred. */
+/* Portrait Rectangular Card Dimensions inside stack (Less Length, More Breadth).
+   Larger cards on mobile with equal padding & optical centering. */
 .card-stack {
   position: relative;
-  width: 270px;  /* Square on Mobile */
-  height: 270px; /* Square on Mobile */
+  width: 88%;
+  max-width: 370px;
+  height: 480px;
   perspective: 1200px;
-  transform: translate(-24px, 20px);
+  transform: translate(0, 0);
+  margin: 0 auto;
   overflow: visible;
 }
 
-/* Base Card Styles: each card is centre-anchored, GSAP drives x/y/z per slot */
+/* Base Card Styles: Image top-half, content bottom-half */
 .stack-card {
   position: absolute;
   top: 0;
@@ -588,14 +591,15 @@ header.scrolled {
   background-color: var(--color-white);
   color: var(--color-primary);
   border-radius: var(--border-radius-md);
-  padding: var(--spacing-md);
-  border: 1px solid var(--color-border);
-  box-shadow: none; /* No shadow for cards as requested */
+  padding: 0;
+  border: 1px solid rgba(0, 43, 102, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center; /* Vertically center square card text content */
-  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  overflow: hidden;
   transform-origin: center center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -605,36 +609,106 @@ header.scrolled {
   pointer-events: none;
 }
 
-.stack-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
+/* Image area — top half of card */
+.stack-card-image {
+  width: 100%;
+  height: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
   background-color: var(--color-bg-light);
-  color: var(--color-orange); /* Orange Icon matches Logo */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
 }
 
-/* Orange Headings on the card stack */
+.stack-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Text body — bottom half of card */
+.stack-card-body {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px 18px;
+  gap: 8px;
+}
+
+/* Dark Blue Headings on the card stack — medium sized, visible */
 .stack-card-title {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--color-orange); /* Changed to Orange from Logo */
-  line-height: 1.3;
+  color: var(--color-dark-blue);
+  line-height: 1.25;
 }
 
 .stack-card-desc {
   font-size: 0.85rem;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--color-text-muted);
 }
 
-/* Orange bold emphasis inside cards */
+/* Dark Blue bold emphasis inside cards */
 .stack-card-desc strong {
-  color: var(--color-orange);
+  color: var(--color-dark-blue);
   font-weight: 700;
+}
+
+/* Unboxed Scroll Hint Indicator near title cards (pure floating text + animated arrow) */
+.cards-scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cards-scroll-indicator .indicator-text {
+  color: #FFFFFF;
+}
+
+.cards-scroll-indicator .indicator-arrow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  animation: scrollArrowBounce 1.6s ease-in-out infinite;
+}
+
+.cards-scroll-indicator .indicator-arrow {
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+@keyframes scrollArrowBounce {
+  0%, 100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
 }
 
 /* Fallback when GSAP is unavailable: unpin the section and show every card
@@ -706,9 +780,9 @@ header.scrolled {
   border: 1px solid rgba(0, 102, 204, 0.15);
 }
 
-/* Vibrant Orange heading "Tailored for Success" */
+/* Dark Blue heading "Tailored for Success" */
 .services-main-heading {
-  color: var(--color-orange);
+  color: var(--color-dark-blue);
   font-size: 1.8rem;        /* prominent header */
   font-weight: 800;
   margin-bottom: 2px;
@@ -741,14 +815,14 @@ header.scrolled {
 }
 
 .highlight-icon {
-  color: var(--color-orange);
+  color: var(--color-dark-blue);
   font-size: 1.05rem;
   margin-top: 2px;
   flex-shrink: 0;
 }
 
 .services-highlights strong {
-  color: var(--color-orange);
+  color: var(--color-dark-blue);
   font-weight: 700;
 }
 
@@ -769,20 +843,90 @@ header.scrolled {
 .why-left-content {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Top panel — blue background with heading, text, CTA */
+.why-left-top {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
+  gap: 14px;
 }
 
-.why-left-content h2 {
-  margin-bottom: var(--spacing-xs);
+.why-left-top h2 {
+  color: var(--color-white);
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0;
 }
 
-.why-left-content p {
-  margin-bottom: var(--spacing-md);
+.why-left-top p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-bottom: 0;
 }
 
-.why-left-content .btn {
-  display: none;
+.why-left-top .btn {
+  display: inline-flex;
+  margin-top: 4px;
+  background-color: var(--color-white);
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+
+.why-left-top .btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Bottom panel — stat counter */
+.why-left-stat {
+  background-color: var(--color-bg-card);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.stat-number {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+}
+
+.stat-counter {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--color-secondary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.stat-plus {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--color-secondary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .why-list {
@@ -1266,7 +1410,7 @@ footer {
 }
 
 .footer-contact-item i {
-  color: var(--color-orange);
+  color: var(--color-white);
 }
 
 .footer-contact-item a {
@@ -1648,31 +1792,43 @@ footer {
     justify-content: center;
   }
 
-  /* Large square cards stack container */
+  /* Tall portrait rectangular title cards with images — desktop */
   .card-stack {
-    width: 340px;
-    height: 340px;
-    transform: translate(-45px, 35px);
+    width: 420px;
+    max-width: 440px;
+    height: 560px;
+    max-height: 580px;
+    min-height: 500px;
+    transform: translate(-10px, 10px);
   }
 
   .stack-card {
-    padding: 30px;
-    gap: 14px;
+    padding: 0;
+    gap: 0;
+    border-radius: 20px;
   }
 
-  .stack-card-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.45rem;
+  .stack-card-image {
+    height: 50%;
+  }
+
+  .stack-card-body {
+    padding: 20px 24px;
+    gap: 10px;
   }
 
   .stack-card-title {
-    font-size: 1.22rem;
+    font-size: 1.25rem;
   }
 
   .stack-card-desc {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     line-height: 1.55;
+  }
+
+  .cards-scroll-indicator {
+    bottom: 30px;
+    font-size: 0.9rem;
   }
 
   /* Why Choose Us Grid */
@@ -1684,21 +1840,42 @@ footer {
   }
 
   .why-left-content {
+    align-items: stretch;
+  }
+
+  .why-left-top {
+    align-items: flex-start;
+    text-align: left;
+    padding: 32px 28px 28px;
+    gap: 16px;
+  }
+
+  .why-left-top h2 {
+    text-align: left;
+    font-size: 1.65rem;
+  }
+
+  .why-left-top p {
+    text-align: left;
+    font-size: 0.98rem;
+  }
+
+  .why-left-stat {
+    padding: 32px 28px;
     align-items: flex-start;
     text-align: left;
   }
 
-  .why-left-content h2 {
-    text-align: left;
+  .stat-counter {
+    font-size: 5.5rem;
   }
 
-  .why-left-content p {
-    text-align: left;
+  .stat-plus {
+    font-size: 4rem;
   }
 
-  .why-left-content .btn {
-    display: inline-flex;
-    margin-top: 10px;
+  .stat-label {
+    font-size: 1.25rem;
   }
 
   .why-list {
