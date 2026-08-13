@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initDirectRedirections(); // All internal link redirections jump directly without lag
   initLogoModal();          // Clickable logo lightbox modal (centered on desktop & mobile)
-  initServiceCardStack();
+  initServiceCardCarousel(); // Interactive 3D Card Carousel with left & right navigation arrows
   initFaqAccordion();
   initScrollReveal();
   initStatCounter();        // Animated 15+ years counter on scroll
@@ -148,153 +148,120 @@ function initMobileMenu() {
 }
 
 /**
- * GSAP + ScrollTrigger Card Stacking Scroll Animation (hiired-inspired)
- * Handles center aligned square cards with flight paths (lift up, fly over, land behind)
+ * Interactive Arrow-Navigated 3D Card Carousel
+ * Handles card navigation via Left/Right arrows, pagination dots, touch swiping, and keyboard shortcuts.
  */
-function initServiceCardStack() {
-  const container = document.querySelector('.services-sticky-container');
-  const cards     = document.querySelectorAll('.stack-card');
+function initServiceCardCarousel() {
+  const cards = document.querySelectorAll('.brochure-card');
+  const prevBtn = document.getElementById('card-prev');
+  const nextBtn = document.getElementById('card-next');
+  const dots = document.querySelectorAll('#carousel-dots .dot');
+  const currentBadge = document.getElementById('carousel-current');
+  const totalBadge = document.getElementById('carousel-total');
+  const stage = document.querySelector('.services-cards-col');
 
-  if (!container || cards.length === 0) return;
+  if (cards.length === 0 || !prevBtn || !nextBtn) return;
 
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    console.warn('GSAP or ScrollTrigger not loaded.');
-    return;
+  let currentIndex = 0;
+  const totalCards = cards.length;
+
+  if (totalBadge) totalBadge.textContent = totalCards;
+
+  function updateCarousel(newIndex) {
+    currentIndex = (newIndex + totalCards) % totalCards;
+
+    const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
+    const nextIndex = (currentIndex + 1) % totalCards;
+
+    cards.forEach((card, idx) => {
+      card.classList.remove('active', 'prev', 'next', 'hidden');
+
+      if (idx === currentIndex) {
+        card.classList.add('active');
+      } else if (idx === prevIndex) {
+        card.classList.add('prev');
+      } else if (idx === nextIndex) {
+        card.classList.add('next');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Update pagination dots
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+
+    // Update numerical counter badge
+    if (currentBadge) {
+      currentBadge.textContent = currentIndex + 1;
+    }
   }
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  const totalCards = cards.length; // 7
-
-  /* ── Initial state: ALL cards hidden, stacked bottom-right ── */
-  gsap.set(cards, {
-    x: 40, y: 40,
-    scale: 0.82,
-    opacity: 0,
-    zIndex: 10,
-    rotation: 0,
-    transformOrigin: 'center center'
+  // Event Listeners for Arrow Buttons
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    updateCarousel(currentIndex - 1);
   });
 
-  /* ── Prime first 3 visible shingle slots ── */
-  gsap.set(cards[0], { x: 0,  y: 0,  scale: 1,    opacity: 1,    zIndex: 100 });
-  gsap.set(cards[1], { x: 12, y: 12, scale: 0.94, opacity: 0.97, zIndex: 90  });
-  gsap.set(cards[2], { x: 24, y: 24, scale: 0.88, opacity: 0.90, zIndex: 80  });
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    updateCarousel(currentIndex + 1);
+  });
 
-  /*
-   * Timeline layout — 5 units per card swap (more reading time per card):
-   *   [base+0   … base+2.0] → HOLD  (front card fully readable, no motion)
-   *   [base+2.0 … base+3.2] → LIFT  (card A arcs up and left)
-   *   [base+3.2 … base+4.2] → LAND  (card A drops behind stack)
-   *   [base+2.0 … base+4.2] → B/C/D slide forward simultaneously
-   *
-   * 7 cards = 6 swaps × 5 units + 3 final hold = 33 total units
-   */
-  const SWAP        = 5;    // timeline units per card swap (increased for better readability)
-  const CARD_UNITS  = (totalCards - 1) * SWAP + 3; // 33 (6 swaps + extended final hold)
-  const SLIDE_UNITS = window.innerWidth < 1024 ? 8.0 : 0;
-  const TOTAL_UNITS = CARD_UNITS + SLIDE_UNITS;
-  const PX_PER_UNIT = 150;
-  const totalPx     = TOTAL_UNITS * PX_PER_UNIT;
+  // Event Listeners for Pagination Dots
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) updateCarousel(idx);
+    });
+  });
 
-  // Set container height exactly — no blank leftover, no cut-off slide
-  container.style.height = totalPx + 'px';
+  // Keyboard Navigation when hovering or focusing the carousel area
+  document.addEventListener('keydown', (e) => {
+    const servicesSection = document.getElementById('services');
+    if (!servicesSection) return;
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.services-sticky-container',
-      start:   () => 'top top+=' + (document.getElementById('header').offsetHeight || 72),
-      end:     () => '+=' + totalPx,
-      scrub:   1.5,
-      invalidateOnRefresh: true
+    const rect = servicesSection.getBoundingClientRect();
+    const isVisible = (rect.top < window.innerHeight && rect.bottom > 0);
+
+    if (isVisible) {
+      if (e.key === 'ArrowLeft') {
+        updateCarousel(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        updateCarousel(currentIndex + 1);
+      }
     }
   });
 
-  /* Scroll hint indicator stays persistent until user actively begins first scroll */
-  const scrollIndicator = document.getElementById('cards-scroll-indicator');
-  if (scrollIndicator) {
-    tl.to(scrollIndicator, { opacity: 1, duration: 2.0 }, 0);
-    tl.to(scrollIndicator, {
-      opacity: 0,
-      y: 15,
-      duration: 0.8,
-      ease: 'power1.out'
-    }, 2.0);
+  // Touch Swipe Support for Mobile Devices
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if (stage) {
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
   }
 
-  for (let i = 0; i < totalCards - 1; i++) {
-    const base  = i * SWAP;
-    const cardA = cards[i];       // exits — lifts and lands behind
-    const cardB = cards[i + 1];  // becomes new front
-    const cardC = cards[i + 2];  // moves to shingle pos 1
-    const cardD = cards[i + 3];  // moves to shingle pos 2
-
-    /* HOLD — keep front card fully still so it is readable */
-    tl.to(cardA, { opacity: 1, duration: 2.0, ease: 'none' }, base);
-
-    /* CARD A — Phase 1: Lift and arc left */
-    tl.to(cardA, {
-      y: -250, x: -65,
-      scale: 1.04, rotation: -10, opacity: 0.85,
-      duration: 1.2, ease: 'power2.out'
-    }, base + 2.0);
-
-    /* CARD A — Phase 2: Drop behind the stack */
-    tl.to(cardA, {
-      y: 40, x: 40,
-      scale: 0.82, rotation: 0, opacity: 0,
-      duration: 1.0, ease: 'power2.in',
-      onStart:           () => gsap.set(cardA, { zIndex: 10  }),
-      onReverseComplete: () => gsap.set(cardA, { zIndex: 100 })
-    }, base + 3.2);
-
-    /* CARD B — Slide to front */
-    tl.to(cardB, {
-      x: 0, y: 0, scale: 1, opacity: 1,
-      duration: 2.2, ease: 'power2.inOut',
-      onStart:           () => gsap.set(cardB, { zIndex: 100 }),
-      onReverseComplete: () => gsap.set(cardB, { zIndex: 90  })
-    }, base + 2.0);
-
-    /* CARD C — Move to shingle pos 1 */
-    if (cardC) {
-      tl.to(cardC, {
-        x: 12, y: 12, scale: 0.94, opacity: 0.97,
-        duration: 2.2, ease: 'power2.inOut',
-        onStart:           () => gsap.set(cardC, { zIndex: 90 }),
-        onReverseComplete: () => gsap.set(cardC, { zIndex: 80 })
-      }, base + 2.0);
-    }
-
-    /* CARD D — Fade into shingle pos 2 */
-    if (cardD) {
-      tl.to(cardD, {
-        x: 24, y: 24, scale: 0.88, opacity: 0.90,
-        duration: 2.2, ease: 'power2.inOut',
-        onStart:           () => gsap.set(cardD, { zIndex: 80 }),
-        onReverseComplete: () => gsap.set(cardD, { zIndex: 10 })
-      }, base + 2.0);
+  function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+    if (Math.abs(swipeDistance) > 40) {
+      if (swipeDistance < 0) {
+        updateCarousel(currentIndex + 1); // Swipe Left -> Next
+      } else {
+        updateCarousel(currentIndex - 1); // Swipe Right -> Prev
+      }
     }
   }
 
-  /* ── Final hold: card 7 stays fully visible at the front for 3 units ── */
-  const lastBase = (totalCards - 1) * SWAP;
-  tl.to(cards[totalCards - 1], { opacity: 1, duration: 3.0, ease: 'none' }, lastBase);
-
-  /* ── Mobile only: after ALL 7 cards finish, slide the entire track up
-     yPercent:-50 moves the 200%-tall track up by one full viewport screen,
-     perfectly revealing the blue text panel beneath the card panel ── */
-  if (window.innerWidth < 1024) {
-    const slideAt = lastBase + 3.0;
-    tl.to('.services-panels-track', {
-      yPercent: -50,          // 50% of 200% height = one full viewport screen
-      duration: 1.5,
-      ease: 'power2.inOut'
-    }, slideAt);
-
-    // Extended hold on blue text panel so mobile user has ample time to read
-    tl.to({}, { duration: 6.5 }, slideAt + 1.5);
-  }
+  // Initialize first slide view
+  updateCarousel(0);
 }
 
 /**

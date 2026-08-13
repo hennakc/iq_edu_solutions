@@ -121,6 +121,7 @@
           <li class="nav-item"><a href="#hero">Home</a></li>
           <li class="nav-item"><a href="#services">Services</a></li>
           <li class="nav-item"><a href="#why-choose-us">Why Us</a></li>
+          <li class="nav-item"><a href="#founder">Founder</a></li>
           <li class="nav-item"><a href="#faqs">FAQs</a></li>
           <li class="nav-item nav-cta"><a href="#contact" class="btn btn-secondary">Contact Us</a></li>
         </ul>
@@ -160,132 +161,170 @@
     </div>
   </section>
 
-  <!-- Services Section (Split Screen, Dynamic Center Stacking Cards) -->
-  <section class="services-section" id="services">
-    <div class="services-sticky-container">
-      <div class="services-wrapper">
-        <div class="services-panels-track">
+  <!-- Services Section (Interactive Cards Left, Tailored for Success Text Right) -->
+  <section class="services-section section-padding" id="services">
+    <div class="container">
+      <div class="services-split-grid reveal">
+        
+        <!-- Left Side: Interactive Arrow-Navigated 3D Card Deck -->
+        <div class="services-cards-col">
+          <div class="carousel-stage">
+            <!-- Left Arrow Button -->
+            <button class="carousel-arrow prev-arrow" id="card-prev" aria-label="Previous card">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
 
-          <!-- Panel 1: Blue Background, Center Aligned Rectangular White Cards -->
-          <div class="services-right-stack">
-            <!-- Scroll Indication Badge with Animated Directional Arrow -->
-            <div class="cards-scroll-indicator" id="cards-scroll-indicator">
-              <span class="indicator-text">Scroll to explore programs</span>
-              <div class="indicator-arrow-wrapper">
-                <i class="fa-solid fa-arrow-down-long indicator-arrow"></i>
-              </div>
-            </div>
+            <!-- Cards Viewport Container -->
+            <div class="carousel-viewport">
+              <div class="carousel-cards-stack" id="carousel-cards-stack">
 
-            <div class="card-stack-viewport">
-              <div class="card-stack" id="card-stack">
-              
                 <!-- Card 1 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="Individual Tuition & JEC.jpeg" alt="Individual Tuition & JEC">
+                <div class="brochure-card active" data-index="0">
+                  <div class="card-image-box">
+                    <img src="Individual Tuition & JEC.jpeg" alt="Individual Tuition">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Individual Tuition & JEC</h3>
-                    <p class="stack-card-desc">Personalized one-to-one tuition designed according to each student's academic needs, learning pace, and goals.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Individual Tuition</h3>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> <strong>For Plus One & Plus Two (Science & CBSE)</strong></li>
+                      <li><i class="fa-solid fa-circle-check"></i> <strong>Targeted Coaching for NEET, JEE & KEAM Aspirants</strong></li>
+                      <li><i class="fa-solid fa-circle-check"></i> Personalized 1-on-1 Mentorship & Tailored Pace</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Deep Conceptual Clarity & Problem-Solving Mastery</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 2 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="CBSE Special Progams.jpeg" alt="CBSE Special Programs">
+                <div class="brochure-card next" data-index="1">
+                  <div class="card-image-box">
+                    <img src="CBSE Special Progams.jpeg" alt="CBSE Special Program">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">CBSE Special Programs</h3>
-                    <p class="stack-card-desc">Focused academic programs specifically designed for CBSE students, with structured learning and exam-oriented preparation.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">CBSE Special Program</h3>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Thorough Coverage of NCERT Textbooks & Exemplar Problems</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Step-by-Step Subjective Answer Writing Practice</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Board-Pattern Mock Examinations & Detailed Evaluation</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 3 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="Repeaters special programme.jpeg" alt="Repeater Special Programs">
+                <div class="brochure-card hidden" data-index="2">
+                  <div class="card-image-box">
+                    <img src="Repeaters special programme.jpeg" alt="Repeaters Special Program">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Repeater Special Programs</h3>
-                    <p class="stack-card-desc">Dedicated programs for repeater students, providing focused revision, concept strengthening, and targeted examination preparation.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Repeaters Special Program</h3>
+                    <p class="card-tagline"><i class="fa-solid fa-quote-left"></i> Turn Your Target Rank into Reality</p>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Accelerated Revision & High-Yield Concept Coverage</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Intensive Previous Years' Question (PYQ) Solving</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Continuous Performance Monitoring & Error Analysis</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 4 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="Foundations Classes from 5th to 10th.jpeg" alt="Foundation Programs – Classes 5 to 10">
+                <div class="brochure-card hidden" data-index="3">
+                  <div class="card-image-box">
+                    <img src="Foundations Classes from 5th to 10th.jpeg" alt="Class 5–10 Foundation Program">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Foundation Programs – Classes 5 to 10</h3>
-                    <p class="stack-card-desc">Build a strong academic foundation from an early stage with comprehensive programs for students from Classes 5 to 10.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Class 5–10 Foundation Program</h3>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Concept-Driven Learning in Science & Mathematics</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Foundation Prep for Olympiads, NTSE & Competitive Exams</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Interactive & Analytical Problem-Solving Skills</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 5 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="Academic Support for CBSE students.jpeg" alt="Academic Support for CBSE Students">
+                <div class="brochure-card hidden" data-index="4">
+                  <div class="card-image-box">
+                    <img src="Academic Support for CBSE students.jpeg" alt="Integrated CBSE Batch">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Academic Support for CBSE Students</h3>
-                    <p class="stack-card-desc">Specialized academic support for CBSE students through: <strong>Integrated Batches</strong>, <strong>Class 8 onwards</strong>, <strong>Concept learning</strong>, and <strong>Exam preparation</strong>.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Integrated CBSE Batch (Grade 8 Onwards)</h3>
+                    <p class="card-tagline"><i class="fa-solid fa-quote-left"></i> Dual Advantage: School & Entrance Preparation Hand-in-Hand</p>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Balanced Coverage of Board Syllabus & Entrance Curriculum</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Seamless Transition to Higher Secondary Batches</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Reduced Academic Stress via Unified Study Schedules</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 6 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
+                <div class="brochure-card hidden" data-index="5">
+                  <div class="card-image-box">
                     <img src="Open School Batches .jpeg" alt="Open School Batches">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Open School Batches</h3>
-                    <p class="stack-card-desc">Flexible academic programs designed for students pursuing Open School education, with dedicated support based on their curriculum.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Open School Batches (NIOS Support)</h3>
+                    <p class="card-tagline"><i class="fa-solid fa-quote-left"></i> Flexible & Inclusive Quality Education</p>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Structured Study Plans & Complete Syllabus Navigation</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Practical Assignment Guidance & Exam Preparation</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Dedicated 1-on-1 Doubt-Clearing Sessions</li>
+                    </ul>
                   </div>
                 </div>
-              
+
                 <!-- Card 7 -->
-                <div class="stack-card">
-                  <div class="stack-card-image">
-                    <img src="Online & Offline Classes.jpeg" alt="Online & Offline Classes">
+                <div class="brochure-card prev" data-index="6">
+                  <div class="card-image-box">
+                    <img src="Online & Offline Classes.jpeg" alt="Hybrid Learning Model">
                   </div>
-                  <div class="stack-card-body">
-                    <h3 class="stack-card-title">Online & Offline Classes</h3>
-                    <p class="stack-card-desc">Choose your mode: <strong>Online Classes</strong> to learn from anywhere with flexible access, or <strong>Offline Classes</strong> for traditional classroom guidance.</p>
+                  <div class="card-content-box">
+                    <h3 class="card-title">Hybrid Learning Model (Online & Offline)</h3>
+                    <p class="card-tagline"><i class="fa-solid fa-quote-left"></i> Flexible Learning at Your Preferred Pace</p>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> High-Definition Live Online Streams & Session Recordings</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Well-Equipped Offline Centers with Expert Faculty</li>
+                      <li><i class="fa-solid fa-circle-check"></i> 24/7 Unlimited Access to Digital Study Materials</li>
+                    </ul>
                   </div>
                 </div>
-              
+
+              </div>
+            </div>
+
+            <!-- Right Arrow Button -->
+            <button class="carousel-arrow next-arrow" id="card-next" aria-label="Next card">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side: Tailored for Success Text Panel -->
+        <div class="services-text-col">
+          <div class="services-text-content">
+            <span class="badge"><i class="fa-solid fa-star"></i> Tailored Guidance</span>
+            <h2 class="services-main-heading">Tailored for Success</h2>
+            <p class="services-main-desc">At IQ Edu Solutions, we believe that education is not a one-size-fits-all journey. Our programs are engineered to build conceptual strength, logical reasoning, and confidence. Whether preparing for competitive board exams or strengthening fundamental grade levels, our structured curriculum and specialized batches ensure that every student reaches their full potential.</p>
+            
+            <div class="services-highlights">
+              <div class="highlight-item">
+                <div class="highlight-icon"><i class="fa-solid fa-star"></i></div>
+                <span><strong>Concept-First Approach</strong>: Prioritizing deep understanding over rote learning.</span>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <span><strong>Personalized Guidance</strong>: Dedicated mentorship tracking student growth.</span>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <span><strong>Continuous Assessment</strong>: Regular mock tests and structured revisions.</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Panel 2: White Background, Blue Content Text -->
-          <div class="services-left-text">
-            <div class="services-text-content">
-              <h2 class="services-main-heading">Tailored for Success</h2>
-              <p class="services-main-desc">At IQ Edu Solutions, we believe that education is not a one-size-fits-all journey. Our programs are engineered to build conceptual strength, logical reasoning, and confidence. Whether preparing for competitive board exams or strengthening fundamental grade levels, our structured curriculum and specialized batches ensure that every student reaches their full potential.</p>
-              
-              <div class="services-highlights">
-                <div class="highlight-item">
-                  <div class="highlight-icon"><i class="fa-solid fa-star"></i></div>
-                  <span><strong>Concept-First Approach</strong>: Prioritizing deep understanding over rote learning.</span>
-                </div>
-                <div class="highlight-item">
-                  <div class="highlight-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                  <span><strong>Personalized Guidance</strong>: Dedicated mentorship tracking student growth.</span>
-                </div>
-                <div class="highlight-item">
-                  <div class="highlight-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                  <span><strong>Continuous Assessment</strong>: Regular mock tests and structured revisions.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /.services-panels-track -->
       </div>
     </div>
+  </section>
   </section>
 
   <!-- Why Choose Us Section -->
@@ -359,6 +398,88 @@
             <div class="why-item-text">
               <span class="why-item-title">Exam-Focused Preparation</span>
               <span class="why-item-desc">Targeted preparation to help students perform better in examinations.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the Founder Section (Leadership Profile from Brochure) -->
+  <section class="founder-section section-padding" id="founder">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle"><i class="fa-solid fa-user-tie"></i> Academic Leadership</span>
+        <h2>Leadership Profile</h2>
+        <p>Decades of entrance coaching expertise driving academic excellence and institutional success.</p>
+      </div>
+
+      <div class="founder-card reveal">
+        <div class="founder-grid">
+          <!-- Image Column -->
+          <div class="founder-image-col">
+            <div class="founder-image-wrapper">
+              <img src="founder_hd.png" alt="K.P. Muhammad Iqbal - CEO & Academic Director" class="founder-img">
+              <div class="founder-image-glass-card">
+                <span class="founder-degree-badge">M.Sc. Physics &nbsp;|&nbsp; M.Ed.</span>
+                <span class="founder-role-tag">Academic Visionary & Educator</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Column -->
+          <div class="founder-info-col">
+            <div class="founder-header-block">
+              <h3 class="founder-name">K.P. MUHAMMAD IQBAL</h3>
+              <p class="founder-designation">CHIEF EXECUTIVE OFFICER & ACADEMIC DIRECTOR</p>
+            </div>
+
+            <div class="founder-bio-box">
+              <p>A distinguished academician, physicist, and educationist, K.P. Muhammad Iqbal brings decades of premier entrance coaching expertise to school campuses. Holding a Master of Science in Physics and a Master of Education, he has mentored thousands of medical and engineering aspirants across Kerala's most renowned competitive exam institutes.</p>
+            </div>
+
+            <!-- Leadership Experience Grid -->
+            <div class="founder-experience-block">
+              <h4 class="exp-title"><i class="fa-solid fa-award"></i> Rich Faculty & Academic Leadership Experience Across Premier Institutes:</h4>
+              <div class="exp-cards-grid">
+                
+                <!-- Institute 1 -->
+                <div class="exp-card">
+                  <div class="exp-icon"><i class="fa-solid fa-building-columns"></i></div>
+                  <div class="exp-details">
+                    <h5 class="exp-institute">Brilliant Study Centre, Pala</h5>
+                    <p class="exp-text">Proven pedagogical methods in highly rigorous entrance training environments.</p>
+                  </div>
+                </div>
+
+                <!-- Institute 2 -->
+                <div class="exp-card">
+                  <div class="exp-icon"><i class="fa-solid fa-location-dot"></i></div>
+                  <div class="exp-details">
+                    <h5 class="exp-institute">Rays Entrance Coaching, Calicut</h5>
+                    <p class="exp-text">Extensive track record in competitive exam strategy and student mentorship.</p>
+                  </div>
+                </div>
+
+                <!-- Institute 3 -->
+                <div class="exp-card">
+                  <div class="exp-icon"><i class="fa-solid fa-atom"></i></div>
+                  <div class="exp-details">
+                    <h5 class="exp-institute">Science Institute, Manjeri</h5>
+                    <p class="exp-text">Deep specialization in physics concept building and entrance orientation.</p>
+                  </div>
+                </div>
+
+                <!-- Institute 4 -->
+                <div class="exp-card">
+                  <div class="exp-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                  <div class="exp-details">
+                    <h5 class="exp-institute">DOPA Entrance Coaching Centre</h5>
+                    <p class="exp-text">Innovation in goal-oriented NEET/JEE preparation and academic administration.</p>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -575,6 +696,7 @@
             <li class="footer-link"><a href="#hero">Home</a></li>
             <li class="footer-link"><a href="#services">Our Services</a></li>
             <li class="footer-link"><a href="#why-choose-us">Why Choose Us</a></li>
+            <li class="footer-link"><a href="#founder">Meet the Founder</a></li>
             <li class="footer-link"><a href="#faqs">Frequently Asked Questions</a></li>
           </ul>
         </div>
