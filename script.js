@@ -6,11 +6,24 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Force browser scroll position to top on load/reload
+  // Force browser scroll position to top on load/reload —
+  // unless the page was opened with a target section in the URL
+  // (e.g. redirected here from another page via "index.html#contact"),
+  // in which case jump straight to that section instead of flashing to top.
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
-  window.scrollTo(0, 0);
+
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  } else {
+    window.scrollTo(0, 0);
+  }
 
   initHeaderScroll();
   initMobileMenu();

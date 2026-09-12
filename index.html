@@ -30,9 +30,17 @@
   <meta property="twitter:description" content="Personalized one-to-one tuition, CBSE special programs, repeater programs, and online/offline academic support tailored for student success.">
   <meta property="twitter:image" content="logo.jpg">
 
+  <!-- Favicon -->
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+  <!-- Fonts: Sora (headings) / DM Sans (body) / Poppins (buttons & header) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- External Stylesheets (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 
@@ -178,10 +186,31 @@
             <div class="carousel-viewport">
               <div class="carousel-cards-stack" id="carousel-cards-stack">
 
-                <!-- Card 1 -->
+                <!-- Card 1 (Flagship) -->
                 <div class="brochure-card active" data-index="0">
                   <div class="card-image-box">
-                    <img src="Individual Tuition & JEC.jpeg" alt="Individual Tuition">
+                    <img src="first.png" alt="+1 / +2 Science Integrated Program">
+                  </div>
+                  <div class="card-content-box">
+                    <h3 class="card-title">+1 / +2 Science Integrated Program</h3>
+                    <p class="card-tagline"><i class="fa-solid fa-quote-left"></i> School-Integrated Board & Entrance Preparation</p>
+                    <ul class="card-bullet-list">
+                      <li><i class="fa-solid fa-circle-check"></i> Complete Academic Support Across All +1 / +2 Science Subjects</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Dedicated Practical Classes & Personalized Mentor Support</li>
+                      <li><i class="fa-solid fa-circle-check"></i> Structured Batches with NEET / JEE Entrance Integration</li>
+                    </ul>
+                    <div class="card-cta-row">
+                      <a href="science-integrated-program.html" class="card-more-info-btn">
+                        More Info <i class="fa-solid fa-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="brochure-card next" data-index="1">
+                  <div class="card-image-box">
+                    <img src="Individual Tuition & JEC.jpeg" alt="Individual Tuition" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Individual Tuition</h3>
@@ -194,10 +223,10 @@
                   </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="brochure-card next" data-index="1">
+                <!-- Card 3 -->
+                <div class="brochure-card hidden" data-index="2">
                   <div class="card-image-box">
-                    <img src="CBSE Special Progams.jpeg" alt="CBSE Special Program">
+                    <img src="CBSE Special Progams.jpeg" alt="CBSE Special Program" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">CBSE Special Program</h3>
@@ -209,10 +238,10 @@
                   </div>
                 </div>
 
-                <!-- Card 3 -->
-                <div class="brochure-card hidden" data-index="2">
+                <!-- Card 4 -->
+                <div class="brochure-card hidden" data-index="3">
                   <div class="card-image-box">
-                    <img src="Repeaters special programme.jpeg" alt="Repeaters Special Program">
+                    <img src="Repeaters special programme.jpeg" alt="Repeaters Special Program" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Repeaters Special Program</h3>
@@ -225,10 +254,10 @@
                   </div>
                 </div>
 
-                <!-- Card 4 -->
-                <div class="brochure-card hidden" data-index="3">
+                <!-- Card 5 -->
+                <div class="brochure-card hidden" data-index="4">
                   <div class="card-image-box">
-                    <img src="Foundations Classes from 5th to 10th.jpeg" alt="Class 5–10 Foundation Program">
+                    <img src="Foundations Classes from 5th to 10th.jpeg" alt="Class 5–10 Foundation Program" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Class 5–10 Foundation Program</h3>
@@ -240,10 +269,10 @@
                   </div>
                 </div>
 
-                <!-- Card 5 -->
-                <div class="brochure-card hidden" data-index="4">
+                <!-- Card 6 -->
+                <div class="brochure-card hidden" data-index="5">
                   <div class="card-image-box">
-                    <img src="Academic Support for CBSE students.jpeg" alt="Integrated CBSE Batch">
+                    <img src="Academic Support for CBSE students.jpeg" alt="Integrated CBSE Batch" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Integrated CBSE Batch (Grade 8 Onwards)</h3>
@@ -256,10 +285,10 @@
                   </div>
                 </div>
 
-                <!-- Card 6 -->
-                <div class="brochure-card hidden" data-index="5">
+                <!-- Card 7 -->
+                <div class="brochure-card hidden" data-index="6">
                   <div class="card-image-box">
-                    <img src="Open School Batches .jpeg" alt="Open School Batches">
+                    <img src="Open School Batches .jpeg" alt="Open School Batches" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Open School Batches (NIOS Support)</h3>
@@ -272,10 +301,10 @@
                   </div>
                 </div>
 
-                <!-- Card 7 -->
-                <div class="brochure-card prev" data-index="6">
+                <!-- Card 8 -->
+                <div class="brochure-card prev" data-index="7">
                   <div class="card-image-box">
-                    <img src="Online & Offline Classes.jpeg" alt="Hybrid Learning Model">
+                    <img src="Online & Offline Classes.jpeg" alt="Hybrid Learning Model" loading="lazy">
                   </div>
                   <div class="card-content-box">
                     <h3 class="card-title">Hybrid Learning Model (Online & Offline)</h3>
@@ -301,7 +330,6 @@
         <!-- Right Side: Tailored for Success Text Panel -->
         <div class="services-text-col">
           <div class="services-text-content">
-            <span class="badge"><i class="fa-solid fa-star"></i> Tailored Guidance</span>
             <h2 class="services-main-heading">Tailored for Success</h2>
             <p class="services-main-desc">At IQ Edu Solutions, we believe that education is not a one-size-fits-all journey. Our programs are engineered to build conceptual strength, logical reasoning, and confidence. Whether preparing for competitive board exams or strengthening fundamental grade levels, our structured curriculum and specialized batches ensure that every student reaches their full potential.</p>
             
@@ -409,9 +437,7 @@
   <section class="founder-section section-padding" id="founder">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-subtitle"><i class="fa-solid fa-user-tie"></i> Academic Leadership</span>
-        <h2>Leadership Profile</h2>
-        <p>Decades of entrance coaching expertise driving academic excellence and institutional success.</p>
+        <h2>Meet the Founder</h2>
       </div>
 
       <div class="founder-card reveal">
@@ -562,6 +588,7 @@
               <label for="program-interest" class="form-label">Program of Interest</label>
               <select id="program-interest" class="form-control" required>
                 <option value="" disabled selected>Select educational interest</option>
+                <option value="+1/+2 Science Integrated Program">+1 / +2 Science Integrated Program</option>
                 <option value="Individual Tuition & JEC">Individual Tuition & JEC</option>
                 <option value="CBSE Special Programs">CBSE Special Programs</option>
                 <option value="Repeater Special Programs">Repeater Special Programs</option>
@@ -725,8 +752,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 IQ Edu Solutions. All rights reserved.</p>
         <ul class="footer-bottom-links">
-          <li><a href="#services">Privacy Policy</a></li>
-          <li><a href="#services">Terms of Service</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
         </ul>
       </div>
     </div>
@@ -741,10 +768,6 @@
       <p class="logo-modal-caption">IQ Edu Solutions</p>
     </div>
   </div>
-
-  <!-- Scroll-driven card deck animation (GSAP + ScrollTrigger) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <!-- Script File -->
   <script src="script.js"></script>
